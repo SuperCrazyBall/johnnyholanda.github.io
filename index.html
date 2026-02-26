@@ -1,79 +1,114 @@
 <!DOCTYPE html>
-<html>
+<html lang="pt-br">
 <head>
 <meta charset="UTF-8">
-<title>Gerador de Versículos</title>
+<title>Versículo Studio</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+
 <style>
-body{
+*{
   margin:0;
-  font-family: 'Georgia', serif;
+  padding:0;
+  box-sizing:border-box;
+}
+
+body{
+  font-family: 'Inter', sans-serif;
   background:#0f172a;
   color:white;
-  text-align:center;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  padding:30px 15px;
 }
-.container{
-  padding:20px;
+
+.app{
+  width:100%;
+  max-width:500px;
 }
-select, textarea, input{
-  width:90%;
-  padding:10px;
-  margin:8px 0;
-  border-radius:8px;
+
+h1{
+  font-weight:500;
+  margin-bottom:20px;
+  font-size:22px;
+  letter-spacing:1px;
+  opacity:0.9;
+}
+
+input, select{
+  width:100%;
+  padding:14px;
+  margin-bottom:12px;
   border:none;
+  border-radius:12px;
+  background:#1e293b;
+  color:white;
+  font-size:14px;
 }
+
 button{
-  padding:12px 20px;
-  margin:10px;
+  width:100%;
+  padding:14px;
   border:none;
-  border-radius:10px;
-  background:#38bdf8;
-  font-weight:bold;
+  border-radius:12px;
+  background:white;
+  color:black;
+  font-weight:500;
   cursor:pointer;
+  margin-bottom:10px;
+  transition:0.3s;
 }
+
+button:hover{
+  opacity:0.8;
+}
+
 canvas{
-  margin-top:20px;
-  border-radius:20px;
+  margin-top:25px;
+  border-radius:25px;
+  width:100%;
+  max-width:500px;
 }
 </style>
 </head>
 
 <body>
 
-<div class="container">
+<div class="app">
+  <h1>Versículo Studio</h1>
 
-<h2>Gerador de Versículo</h2>
+  <input type="text" id="title" placeholder="Título (ex: Versículo do Dia)">
+  <input type="text" id="reference" placeholder="Referência (ex: Salmos 37:4)">
+  
+  <select id="version">
+    <option value="NAA">NAA</option>
+    <option value="NVI">NVI</option>
+    <option value="ARA">ARA</option>
+  </select>
 
-<input type="text" id="title" placeholder="Título (ex: Versículo do Dia)">
+  <input type="file" id="upload" accept="image/*">
 
-<select id="verseSelect">
-  <option value="Salmos 37:4|Agrade-se do Senhor, e ele satisfará os desejos do seu coração.">Salmos 37:4</option>
-  <option value="Jeremias 29:11|Porque eu bem sei os planos que tenho para vocês...">Jeremias 29:11</option>
-  <option value="Provérbios 3:5|Confie no Senhor de todo o seu coração...">Provérbios 3:5</option>
-</select>
-
-<select id="version">
-  <option>NAA</option>
-  <option>NVI</option>
-  <option>ARA</option>
-</select>
-
-<select id="template">
-  <option value="nature">Natureza</option>
-  <option value="dark">Escuro</option>
-  <option value="gold">Dourado</option>
-</select>
-
-<input type="file" id="upload" accept="image/*">
-
-<button onclick="generateImage()">Gerar</button>
-<button onclick="downloadImage()">Baixar</button>
-
-<br>
-<canvas id="canvas" width="1080" height="1080"></canvas>
-
+  <button onclick="generateImage()">Gerar</button>
+  <button onclick="downloadImage()">Baixar</button>
 </div>
 
+<canvas id="canvas" width="1080" height="1080"></canvas>
+
 <script>
+const bible = {
+  "Salmos 37:4": {
+    "NAA": "Agrade-se do Senhor, e ele satisfará os desejos do seu coração.",
+    "NVI": "Deleite-se no Senhor, e ele atenderá aos desejos do seu coração.",
+    "ARA": "Agrada-te do Senhor, e ele satisfará os desejos do teu coração."
+  },
+  "João 3:16": {
+    "NAA": "Porque Deus amou o mundo de tal maneira que deu o seu Filho unigênito...",
+    "NVI": "Porque Deus tanto amou o mundo que deu o seu Filho unigênito...",
+    "ARA": "Porque Deus amou ao mundo de tal maneira que deu o seu Filho unigênito..."
+  }
+};
+
 let uploadedImage = null;
 
 document.getElementById("upload").addEventListener("change", function(e){
@@ -90,45 +125,36 @@ function generateImage(){
   const ctx = canvas.getContext("2d");
 
   const title = document.getElementById("title").value;
-  const verseData = document.getElementById("verseSelect").value.split("|");
-  const reference = verseData[0];
-  const verse = verseData[1];
+  const reference = document.getElementById("reference").value;
   const version = document.getElementById("version").value;
-  const template = document.getElementById("template").value;
+
+  let verse = bible[reference]?.[version] || "Versículo não encontrado.";
 
   if(uploadedImage){
     ctx.drawImage(uploadedImage,0,0,1080,1080);
   } else {
-    if(template==="nature"){
-      ctx.fillStyle="#1e3a2f";
-    }
-    if(template==="dark"){
-      ctx.fillStyle="#111827";
-    }
-    if(template==="gold"){
-      ctx.fillStyle="#7c5e10";
-    }
+    ctx.fillStyle="#111827";
     ctx.fillRect(0,0,1080,1080);
   }
 
-  ctx.fillStyle="rgba(0,0,0,0.4)";
+  ctx.fillStyle="rgba(0,0,0,0.45)";
   ctx.fillRect(0,0,1080,1080);
 
   ctx.fillStyle="white";
   ctx.textAlign="left";
 
-  ctx.font="40px Georgia";
-  ctx.fillText(title,80,120);
+  ctx.font="40px Inter";
+  ctx.fillText(title,100,150);
 
-  ctx.font="50px Georgia";
-  wrapText(ctx, verse, 80, 300, 920, 70);
+  ctx.font="60px Playfair Display";
+  wrapText(ctx, verse, 100, 350, 880, 80);
 
-  ctx.font="40px Georgia";
-  ctx.fillText(reference+" "+version,80,950);
+  ctx.font="40px Inter";
+  ctx.fillText(reference+" "+version,100,1000);
 }
 
 function wrapText(ctx, text, x, y, maxWidth, lineHeight){
-  const words = text.split(" ");
+  const words=text.split(" ");
   let line="";
   for(let n=0;n<words.length;n++){
     const testLine=line+words[n]+" ";

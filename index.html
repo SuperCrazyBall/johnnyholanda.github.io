@@ -142,6 +142,12 @@ to{opacity:1;transform:translateY(0)}
 
 <canvas id="canvas" width="1080" height="1080"></canvas>
 
+<div style="margin-top:60px;width:100%;max-width:480px">
+<h3 style="margin-bottom:15px;color:#ff7a00">Artigos</h3>
+<input type="text" id="search" placeholder="Buscar artigo..." onkeyup="buscarArtigo()">
+<div id="articles"></div>
+</div>
+
 </div>
 
 <script>
@@ -221,41 +227,16 @@ wrapText(ctx,texto,100,350,880,90);
 ctx.font = "45px Inter";
 ctx.fillText(ref || "",100,980);
 
+let history = JSON.parse(localStorage.getItem("history")) || [];
+history.push({texto,ref,desc});
+localStorage.setItem("history", JSON.stringify(history));
+
 // animação final
 canvas.style.transition = "all 0.6s ease";
 canvas.style.opacity = "1";
 canvas.style.transform = "scale(1)";
 
 },200);
-
-let history = JSON.parse(localStorage.getItem("history")) || [];
-history.push({texto,ref,desc});
-localStorage.setItem("history", JSON.stringify(history));
-
-<div style="margin-top:50px;width:100%;max-width:480px">
-<h3 style="margin-bottom:15px;color:#ff7a00">Artigos</h3>
-<input type="text" id="search" placeholder="Buscar artigo..." onkeyup="buscarArtigo()">
-<div id="articles"></div>
-</div>
-
-const artigos=[
-{titulo:"Como meditar na Palavra",conteudo:"Aprenda a aplicar versículos no dia a dia."},
-{titulo:"O poder da fé",conteudo:"A fé move montanhas."},
-{titulo:"Versículos sobre esperança",conteudo:"Esperança em tempos difíceis."}
-];
-
-function buscarArtigo(){
-const termo=document.getElementById("search").value.toLowerCase();
-const area=document.getElementById("articles");
-area.innerHTML="";
-artigos.filter(a=>a.titulo.toLowerCase().includes(termo))
-.forEach(a=>{
-area.innerHTML+=`<div style="padding:15px;background:rgba(255,255,255,0.05);border-radius:15px;margin-bottom:10px">
-<h4>${a.titulo}</h4>
-<p style="opacity:0.7">${a.conteudo}</p>
-</div>`;
-});
-}
 }
 
 function wrapText(ctx,text,x,y,maxWidth,lineHeight){
@@ -274,15 +255,28 @@ line=testLine;
 }
 ctx.fillText(line,x,y);
 }
+
+const artigos=[
+{titulo:"Como meditar na Palavra",conteudo:"Aprenda a aplicar versículos no dia a dia."},
+{titulo:"O poder da fé",conteudo:"A fé move montanhas."},
+{titulo:"Versículos sobre esperança",conteudo:"Esperança em tempos difíceis."}
+];
+
+function buscarArtigo(){
+const termo=document.getElementById("search").value.toLowerCase();
+const area=document.getElementById("articles");
+area.innerHTML="";
+artigos.filter(a=>a.titulo.toLowerCase().includes(termo))
+.forEach(a=>{
+area.innerHTML+=`
+<div style="padding:15px;background:rgba(255,255,255,0.05);border-radius:15px;margin-bottom:10px">
+<h4>${a.titulo}</h4>
+<p style="opacity:0.7">${a.conteudo}</p>
+</div>`;
+});
+}
+
 </script>
 
 </body>
 </html>
-
-<script>
-if ("serviceWorker" in navigator) {
-  navigator.serviceWorker.register("service-worker.js");
-}
-</script>
-
-<link rel="manifest" href="manifest.json">

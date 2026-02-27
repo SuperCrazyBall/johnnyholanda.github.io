@@ -225,3 +225,11 @@ ctx.fillText(line,x,y);
 
 </body>
 </html>
+
+<script>
+if ("serviceWorker" in navigator) {
+  navigator.serviceWorker.register("service-worker.js");
+}
+</script>
+
+<link rel="manifest" href="manifest.json">

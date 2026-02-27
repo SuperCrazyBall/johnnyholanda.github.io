@@ -1,278 +1,218 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-  <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>VersoApp</title>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VersoStudio</title>
 
-    <!-- Fontes modernas do Google -->
-    <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700&display=swap"
-      rel="stylesheet"
-    />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
 
-    <style>
-      /* Global Reset */
-      * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-      }
+<style>
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+}
 
-      body {
-        font-family: "Inter", sans-serif;
-        background: #0f1118;
-        color: white;
-        min-height: 100vh;
-        overflow-x: hidden;
-      }
+body{
+  font-family:'Inter',sans-serif;
+  background:linear-gradient(135deg,#0f172a,#111827);
+  color:white;
+  min-height:100vh;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  padding:20px;
+}
 
-      /* Landing Page */
-      .hero {
-        padding: 60px 20px;
-        text-align: center;
-        backdrop-filter: blur(10px);
-        background: rgba(20, 25, 40, 0.65);
-      }
+.app{
+  width:100%;
+  max-width:480px;
+  background:rgba(255,255,255,0.05);
+  backdrop-filter:blur(20px);
+  border-radius:28px;
+  padding:25px;
+  box-shadow:0 20px 40px rgba(0,0,0,0.4);
+  animation:fadeUp 0.8s ease;
+}
 
-      .hero h1 {
-        font-size: 28px;
-        font-weight: 700;
-        margin-bottom: 16px;
-      }
+h1{
+  text-align:center;
+  font-weight:700;
+  margin-bottom:20px;
+  letter-spacing:1px;
+}
 
-      .hero p {
-        font-size: 16px;
-        opacity: 0.8;
-        margin-bottom: 24px;
-      }
+input, textarea{
+  width:100%;
+  padding:16px;
+  margin-bottom:14px;
+  border:none;
+  border-radius:16px;
+  background:rgba(255,255,255,0.07);
+  color:white;
+  font-size:15px;
+  transition:0.3s;
+}
 
-      .btn-primary {
-        display: inline-block;
-        padding: 14px 28px;
-        background: #38bdf8;
-        color: black;
-        font-weight: 600;
-        border-radius: 12px;
-        margin-top: 12px;
-        cursor: pointer;
-        transition: 0.3s ease;
-      }
+input:focus, textarea:focus{
+  outline:none;
+  background:rgba(255,255,255,0.12);
+  transform:scale(1.02);
+}
 
-      .btn-primary:hover {
-        opacity: 0.9;
-        transform: scale(1.05);
-      }
+.templates{
+  display:flex;
+  gap:10px;
+  margin-bottom:15px;
+}
 
-      .container {
-        padding: 24px 20px;
-      }
+.template{
+  flex:1;
+  height:60px;
+  border-radius:14px;
+  cursor:pointer;
+  transition:0.3s;
+}
 
-      .section-title {
-        font-size: 24px;
-        font-weight: 600;
-        margin-bottom: 12px;
-        text-align: center;
-      }
+.template:hover{
+  transform:scale(1.08);
+}
 
-      /* App UI (cards, formas, artigos) */
-      .app {
-        margin-top: 30px;
-        background: rgba(15, 17, 24, 0.8);
-        backdrop-filter: blur(12px);
-        border-radius: 20px;
-        padding: 20px;
-      }
+button{
+  width:100%;
+  padding:16px;
+  border:none;
+  border-radius:18px;
+  background:white;
+  color:black;
+  font-weight:600;
+  font-size:16px;
+  cursor:pointer;
+  transition:0.3s;
+  margin-top:8px;
+}
 
-      input,
-      select {
-        width: 100%;
-        padding: 16px;
-        margin-bottom: 12px;
-        border: none;
-        border-radius: 12px;
-        background: #1e2937;
-        color: white;
-        font-size: 15px;
-      }
+button:hover{
+  transform:scale(1.05);
+}
 
-      input:focus,
-      select:focus {
-        outline: 2px solid #38bdf8;
-      }
+canvas{
+  margin-top:30px;
+  width:100%;
+  max-width:480px;
+  border-radius:25px;
+  animation:fadeUp 0.6s ease;
+}
 
-      .article-card {
-        background: #111827;
-        padding: 16px;
-        border-radius: 12px;
-        margin-bottom: 12px;
-      }
+@keyframes fadeUp{
+  from{opacity:0; transform:translateY(20px);}
+  to{opacity:1; transform:translateY(0);}
+}
+</style>
+</head>
 
-      .article-card h3 {
-        font-size: 18px;
-      }
+<body>
 
-      .article-card p {
-        font-size: 14px;
-        opacity: 0.8;
-      }
-    </style>
-  </head>
+<div class="app">
+<h1>VersoStudio</h1>
 
-  <body>
-    <!-- LANDING -->
-    <section class="hero">
-      <h1>✨ VersoApp — Imagens Bíblicas e Inspiração</h1>
-      <p>
-        Gere versículos com fundos profissionais, veja artigos e interaja com um
-        app web moderno.
-      </p>
-      <div>
-        <a class="btn-primary" onclick="scrollToApp()">Começar</a>
-      </div>
-    </section>
+<input type="text" id="title" placeholder="Título (ex: Versículo do Dia)">
+<textarea id="verse" placeholder="Digite qualquer versículo aqui..."></textarea>
+<input type="text" id="reference" placeholder="Referência (ex: João 3:16)">
 
-    <!-- APP -->
-    <div class="container app" id="appUI">
-      <div class="section-title">Gerar Versículo</div>
-      <input
-        type="text"
-        id="title"
-        placeholder="Título (ex: Versículo do Dia)"
-      />
-      <input
-        type="text"
-        id="reference"
-        placeholder="Referência (ex: João 3:16)"
-      />
+<div class="templates">
+  <div class="template" style="background:url('https://images.unsplash.com/photo-1506744038136-46273834b3fb') center/cover" onclick="setTemplate(this)"></div>
+  <div class="template" style="background:url('https://images.unsplash.com/photo-1497436072909-60f360e1d4b1') center/cover" onclick="setTemplate(this)"></div>
+  <div class="template" style="background:url('https://images.unsplash.com/photo-1500530855697-b586d89ba3ee') center/cover" onclick="setTemplate(this)"></div>
+</div>
 
-      <select id="version">
-        <option value="NAA">NAA</option>
-        <option value="NVI">NVI</option>
-        <option value="ARA">ARA</option>
-      </select>
+<input type="file" id="upload" accept="image/*">
 
-      <input type="file" id="upload" accept="image/*" />
+<button onclick="generateImage()">Gerar Imagem</button>
+<button onclick="downloadImage()">Baixar</button>
 
-      <div class="btn-primary" onclick="generateImage()">Gerar Imagem</div>
-      <div class="btn-primary" onclick="downloadImage()">📥 Baixar</div>
+</div>
 
-      <!-- Pesquisar Artigos -->
-      <div class="section-title" style="margin-top:28px">Artigos</div>
-      <input
-        type="text"
-        id="searchArticle"
-        placeholder="Pesquisar artigo..."
-        oninput="filterArticles()"
-      />
+<canvas id="canvas" width="1080" height="1080"></canvas>
 
-      <div id="articlesList"></div>
-    </div>
+<script>
+let selectedImage = null;
+let uploadedImage = null;
 
-    <canvas id="canvas" width="1080" height="1080"></canvas>
+function setTemplate(el){
+  selectedImage = new Image();
+  selectedImage.crossOrigin = "anonymous";
+  selectedImage.src = el.style.backgroundImage.slice(5,-2);
+}
 
-    <script>
-      // Banco de artigos
-      const articles = [
-        {
-          title: "O poder da fé",
-          text: "A fé muda tudo quando entendemos que não estamos sozinhos…",
-        },
-        {
-          title: "A importância da meditação religiosa",
-          text: "Reserve um tempo para refletir e conectar-se com a Palavra.",
-        },
-      ];
+document.getElementById("upload").addEventListener("change",function(e){
+  const reader = new FileReader();
+  reader.onload=function(event){
+    uploadedImage = new Image();
+    uploadedImage.src=event.target.result;
+  }
+  reader.readAsDataURL(e.target.files[0]);
+});
 
-      function filterArticles() {
-        const term =
-          document.getElementById("searchArticle").value.toLowerCase();
-        const list = document.getElementById("articlesList");
-        list.innerHTML = "";
-        const filtered = articles.filter((a) =>
-          a.title.toLowerCase().includes(term)
-        );
-        filtered.forEach((art) => {
-          const div = document.createElement("div");
-          div.className = "article-card";
-          div.innerHTML = `<h3>${art.title}</h3><p>${art.text}</p>`;
-          list.appendChild(div);
-        });
-      }
+function generateImage(){
+  const canvas=document.getElementById("canvas");
+  const ctx=canvas.getContext("2d");
 
-      // Versículos dinamicamente ilimitados
-      const bible = {}; // você pode adicionar API real depois
+  const title=document.getElementById("title").value;
+  const verse=document.getElementById("verse").value;
+  const reference=document.getElementById("reference").value;
 
-      let uploadedImage = null;
-      document
-        .getElementById("upload")
-        .addEventListener("change", function (e) {
-          const reader = new FileReader();
-          reader.onload = function (event) {
-            uploadedImage = new Image();
-            uploadedImage.src = event.target.result;
-          };
-          reader.readAsDataURL(e.target.files[0]);
-        });
+  if(uploadedImage){
+    ctx.drawImage(uploadedImage,0,0,1080,1080);
+  }else if(selectedImage){
+    ctx.drawImage(selectedImage,0,0,1080,1080);
+  }else{
+    ctx.fillStyle="#111827";
+    ctx.fillRect(0,0,1080,1080);
+  }
 
-      function generateImage() {
-        const canvas = document.getElementById("canvas");
-        const ctx = canvas.getContext("2d");
+  ctx.fillStyle="rgba(0,0,0,0.45)";
+  ctx.fillRect(0,0,1080,1080);
 
-        const title = document.getElementById("title").value;
-        const reference = document.getElementById("reference").value;
-        const version = document.getElementById("version").value;
+  ctx.fillStyle="white";
+  ctx.textAlign="left";
 
-        let verse =
-          bible[reference]?.[version] ||
-          "Digite o versículo acima e selecione a versão…";
+  ctx.font="50px Inter";
+  ctx.fillText(title,100,150);
 
-        if (uploadedImage) {
-          ctx.drawImage(uploadedImage, 0, 0, 1080, 1080);
-        } else {
-          ctx.fillStyle = "#111827";
-          ctx.fillRect(0, 0, 1080, 1080);
-        }
+  ctx.font="70px Inter";
+  wrapText(ctx,verse,100,350,880,80);
 
-        ctx.fillStyle = "rgba(0,0,0,0.4)";
-        ctx.fillRect(0, 0, 1080, 1080);
+  ctx.font="45px Inter";
+  ctx.fillText(reference,100,980);
+}
 
-        ctx.fillStyle = "white";
-        ctx.textAlign = "left";
-        ctx.font = "45px Inter";
-        ctx.fillText(title, 100, 140);
-        ctx.font = "60px Inter";
-        wrapText(ctx, verse, 100, 300, 880, 80);
-      }
+function wrapText(ctx,text,x,y,maxWidth,lineHeight){
+  const words=text.split(" ");
+  let line="";
+  for(let n=0;n<words.length;n++){
+    const testLine=line+words[n]+" ";
+    const metrics=ctx.measureText(testLine);
+    if(metrics.width>maxWidth && n>0){
+      ctx.fillText(line,x,y);
+      line=words[n]+" ";
+      y+=lineHeight;
+    }else{
+      line=testLine;
+    }
+  }
+  ctx.fillText(line,x,y);
+}
 
-      function wrapText(ctx, text, x, y, maxWidth, lineHeight) {
-        const words = text.split(" ");
-        let line = "";
-        for (let n = 0; n < words.length; n++) {
-          const testLine = line + words[n] + " ";
-          const metrics = ctx.measureText(testLine);
-          if (metrics.width > maxWidth && n > 0) {
-            ctx.fillText(line, x, y);
-            line = words[n] + " ";
-            y += lineHeight;
-          } else {
-            line = testLine;
-          }
-        }
-        ctx.fillText(line, x, y);
-      }
+function downloadImage(){
+  const canvas=document.getElementById("canvas");
+  const link=document.createElement("a");
+  link.download="versiculo.png";
+  link.href=canvas.toDataURL();
+  link.click();
+}
+</script>
 
-      function downloadImage() {
-        const canvas = document.getElementById("canvas");
-        const link = document.createElement("a");
-        link.download = "versiculo.png";
-        link.href = canvas.toDataURL();
-        link.click();
-      }
-
-      function scrollToApp() {
-        document.getElementById("appUI").scrollIntoView({ behavior: "smooth" });
-      }
-    </script>
-  </body>
+</body>
 </html>

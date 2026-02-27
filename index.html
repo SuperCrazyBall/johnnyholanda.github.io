@@ -229,22 +229,6 @@ canvas.style.transform = "scale(1)";
 },200);
 }
 
-ctx.fillStyle="rgba(0,0,0,0.45)";
-ctx.fillRect(0,0,1080,1080);
-
-ctx.fillStyle="white";
-ctx.textAlign="left";
-
-ctx.font="50px Inter";
-ctx.fillText(desc,100,150);
-
-ctx.font="75px Playfair Display";
-wrapText(ctx,texto,100,350,880,90);
-
-ctx.font="45px Inter";
-ctx.fillText(ref,100,980);
-}
-
 function wrapText(ctx,text,x,y,maxWidth,lineHeight){
 const words=text.split(" ");
 let line="";

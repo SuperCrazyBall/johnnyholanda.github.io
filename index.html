@@ -227,6 +227,10 @@ canvas.style.opacity = "1";
 canvas.style.transform = "scale(1)";
 
 },200);
+
+let history = JSON.parse(localStorage.getItem("history")) || [];
+history.push({texto,ref,desc});
+localStorage.setItem("history", JSON.stringify(history));
 }
 
 function wrapText(ctx,text,x,y,maxWidth,lineHeight){

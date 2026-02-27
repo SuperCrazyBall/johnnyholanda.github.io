@@ -175,8 +175,14 @@ gerarImagem(data.text,ref,desc);
 }
 
 function gerarImagem(texto,ref,desc){
+
 const canvas=document.getElementById("canvas");
 const ctx=canvas.getContext("2d");
+
+canvas.style.opacity="0";
+canvas.style.transform="scale(0.95)";
+
+setTimeout(()=>{
 
 let img = uploadedImage || selectedImage;
 
@@ -187,6 +193,28 @@ ctx.filter="none";
 }else{
 ctx.fillStyle="#222";
 ctx.fillRect(0,0,1080,1080);
+}
+
+ctx.fillStyle="rgba(0,0,0,0.45)";
+ctx.fillRect(0,0,1080,1080);
+
+ctx.fillStyle="white";
+ctx.textAlign="left";
+
+ctx.font="50px Inter";
+ctx.fillText(desc,100,150);
+
+ctx.font="75px Playfair Display";
+wrapText(ctx,texto,100,350,880,90);
+
+ctx.font="45px Inter";
+ctx.fillText(ref,100,980);
+
+canvas.style.transition="all 0.6s ease";
+canvas.style.opacity="1";
+canvas.style.transform="scale(1)";
+
+},300);
 }
 
 ctx.fillStyle="rgba(0,0,0,0.45)";

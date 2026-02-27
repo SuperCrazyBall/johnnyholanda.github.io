@@ -1,183 +1,278 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-<head>
-<meta charset="UTF-8">
-<title>Versículo Studio</title>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>VersoApp</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+    <!-- Fontes modernas do Google -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700&display=swap"
+      rel="stylesheet"
+    />
 
-<style>
-*{
-  margin:0;
-  padding:0;
-  box-sizing:border-box;
-}
+    <style>
+      /* Global Reset */
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
 
-body{
-  font-family: 'Inter', sans-serif;
-  background:#0f172a;
-  color:white;
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  padding:30px 15px;
-}
+      body {
+        font-family: "Inter", sans-serif;
+        background: #0f1118;
+        color: white;
+        min-height: 100vh;
+        overflow-x: hidden;
+      }
 
-.app{
-  width:100%;
-  max-width:500px;
-}
+      /* Landing Page */
+      .hero {
+        padding: 60px 20px;
+        text-align: center;
+        backdrop-filter: blur(10px);
+        background: rgba(20, 25, 40, 0.65);
+      }
 
-h1{
-  font-weight:500;
-  margin-bottom:20px;
-  font-size:22px;
-  letter-spacing:1px;
-  opacity:0.9;
-}
+      .hero h1 {
+        font-size: 28px;
+        font-weight: 700;
+        margin-bottom: 16px;
+      }
 
-input, select{
-  width:100%;
-  padding:14px;
-  margin-bottom:12px;
-  border:none;
-  border-radius:12px;
-  background:#1e293b;
-  color:white;
-  font-size:14px;
-}
+      .hero p {
+        font-size: 16px;
+        opacity: 0.8;
+        margin-bottom: 24px;
+      }
 
-button{
-  width:100%;
-  padding:14px;
-  border:none;
-  border-radius:12px;
-  background:white;
-  color:black;
-  font-weight:500;
-  cursor:pointer;
-  margin-bottom:10px;
-  transition:0.3s;
-}
+      .btn-primary {
+        display: inline-block;
+        padding: 14px 28px;
+        background: #38bdf8;
+        color: black;
+        font-weight: 600;
+        border-radius: 12px;
+        margin-top: 12px;
+        cursor: pointer;
+        transition: 0.3s ease;
+      }
 
-button:hover{
-  opacity:0.8;
-}
+      .btn-primary:hover {
+        opacity: 0.9;
+        transform: scale(1.05);
+      }
 
-canvas{
-  margin-top:25px;
-  border-radius:25px;
-  width:100%;
-  max-width:500px;
-}
-</style>
-</head>
+      .container {
+        padding: 24px 20px;
+      }
 
-<body>
+      .section-title {
+        font-size: 24px;
+        font-weight: 600;
+        margin-bottom: 12px;
+        text-align: center;
+      }
 
-<div class="app">
-  <h1>Versículo Studio</h1>
+      /* App UI (cards, formas, artigos) */
+      .app {
+        margin-top: 30px;
+        background: rgba(15, 17, 24, 0.8);
+        backdrop-filter: blur(12px);
+        border-radius: 20px;
+        padding: 20px;
+      }
 
-  <input type="text" id="title" placeholder="Título (ex: Versículo do Dia)">
-  <input type="text" id="reference" placeholder="Referência (ex: Salmos 37:4)">
-  
-  <select id="version">
-    <option value="NAA">NAA</option>
-    <option value="NVI">NVI</option>
-    <option value="ARA">ARA</option>
-  </select>
+      input,
+      select {
+        width: 100%;
+        padding: 16px;
+        margin-bottom: 12px;
+        border: none;
+        border-radius: 12px;
+        background: #1e2937;
+        color: white;
+        font-size: 15px;
+      }
 
-  <input type="file" id="upload" accept="image/*">
+      input:focus,
+      select:focus {
+        outline: 2px solid #38bdf8;
+      }
 
-  <button onclick="generateImage()">Gerar</button>
-  <button onclick="downloadImage()">Baixar</button>
-</div>
+      .article-card {
+        background: #111827;
+        padding: 16px;
+        border-radius: 12px;
+        margin-bottom: 12px;
+      }
 
-<canvas id="canvas" width="1080" height="1080"></canvas>
+      .article-card h3 {
+        font-size: 18px;
+      }
 
-<script>
-const bible = {
-  "Salmos 37:4": {
-    "NAA": "Agrade-se do Senhor, e ele satisfará os desejos do seu coração.",
-    "NVI": "Deleite-se no Senhor, e ele atenderá aos desejos do seu coração.",
-    "ARA": "Agrada-te do Senhor, e ele satisfará os desejos do teu coração."
-  },
-  "João 3:16": {
-    "NAA": "Porque Deus amou o mundo de tal maneira que deu o seu Filho unigênito...",
-    "NVI": "Porque Deus tanto amou o mundo que deu o seu Filho unigênito...",
-    "ARA": "Porque Deus amou ao mundo de tal maneira que deu o seu Filho unigênito..."
-  }
-};
+      .article-card p {
+        font-size: 14px;
+        opacity: 0.8;
+      }
+    </style>
+  </head>
 
-let uploadedImage = null;
+  <body>
+    <!-- LANDING -->
+    <section class="hero">
+      <h1>✨ VersoApp — Imagens Bíblicas e Inspiração</h1>
+      <p>
+        Gere versículos com fundos profissionais, veja artigos e interaja com um
+        app web moderno.
+      </p>
+      <div>
+        <a class="btn-primary" onclick="scrollToApp()">Começar</a>
+      </div>
+    </section>
 
-document.getElementById("upload").addEventListener("change", function(e){
-  const reader = new FileReader();
-  reader.onload = function(event){
-    uploadedImage = new Image();
-    uploadedImage.src = event.target.result;
-  }
-  reader.readAsDataURL(e.target.files[0]);
-});
+    <!-- APP -->
+    <div class="container app" id="appUI">
+      <div class="section-title">Gerar Versículo</div>
+      <input
+        type="text"
+        id="title"
+        placeholder="Título (ex: Versículo do Dia)"
+      />
+      <input
+        type="text"
+        id="reference"
+        placeholder="Referência (ex: João 3:16)"
+      />
 
-function generateImage(){
-  const canvas = document.getElementById("canvas");
-  const ctx = canvas.getContext("2d");
+      <select id="version">
+        <option value="NAA">NAA</option>
+        <option value="NVI">NVI</option>
+        <option value="ARA">ARA</option>
+      </select>
 
-  const title = document.getElementById("title").value;
-  const reference = document.getElementById("reference").value;
-  const version = document.getElementById("version").value;
+      <input type="file" id="upload" accept="image/*" />
 
-  let verse = bible[reference]?.[version] || "Versículo não encontrado.";
+      <div class="btn-primary" onclick="generateImage()">Gerar Imagem</div>
+      <div class="btn-primary" onclick="downloadImage()">📥 Baixar</div>
 
-  if(uploadedImage){
-    ctx.drawImage(uploadedImage,0,0,1080,1080);
-  } else {
-    ctx.fillStyle="#111827";
-    ctx.fillRect(0,0,1080,1080);
-  }
+      <!-- Pesquisar Artigos -->
+      <div class="section-title" style="margin-top:28px">Artigos</div>
+      <input
+        type="text"
+        id="searchArticle"
+        placeholder="Pesquisar artigo..."
+        oninput="filterArticles()"
+      />
 
-  ctx.fillStyle="rgba(0,0,0,0.45)";
-  ctx.fillRect(0,0,1080,1080);
+      <div id="articlesList"></div>
+    </div>
 
-  ctx.fillStyle="white";
-  ctx.textAlign="left";
+    <canvas id="canvas" width="1080" height="1080"></canvas>
 
-  ctx.font="40px Inter";
-  ctx.fillText(title,100,150);
+    <script>
+      // Banco de artigos
+      const articles = [
+        {
+          title: "O poder da fé",
+          text: "A fé muda tudo quando entendemos que não estamos sozinhos…",
+        },
+        {
+          title: "A importância da meditação religiosa",
+          text: "Reserve um tempo para refletir e conectar-se com a Palavra.",
+        },
+      ];
 
-  ctx.font="60px Playfair Display";
-  wrapText(ctx, verse, 100, 350, 880, 80);
+      function filterArticles() {
+        const term =
+          document.getElementById("searchArticle").value.toLowerCase();
+        const list = document.getElementById("articlesList");
+        list.innerHTML = "";
+        const filtered = articles.filter((a) =>
+          a.title.toLowerCase().includes(term)
+        );
+        filtered.forEach((art) => {
+          const div = document.createElement("div");
+          div.className = "article-card";
+          div.innerHTML = `<h3>${art.title}</h3><p>${art.text}</p>`;
+          list.appendChild(div);
+        });
+      }
 
-  ctx.font="40px Inter";
-  ctx.fillText(reference+" "+version,100,1000);
-}
+      // Versículos dinamicamente ilimitados
+      const bible = {}; // você pode adicionar API real depois
 
-function wrapText(ctx, text, x, y, maxWidth, lineHeight){
-  const words=text.split(" ");
-  let line="";
-  for(let n=0;n<words.length;n++){
-    const testLine=line+words[n]+" ";
-    const metrics=ctx.measureText(testLine);
-    if(metrics.width>maxWidth && n>0){
-      ctx.fillText(line,x,y);
-      line=words[n]+" ";
-      y+=lineHeight;
-    }else{
-      line=testLine;
-    }
-  }
-  ctx.fillText(line,x,y);
-}
+      let uploadedImage = null;
+      document
+        .getElementById("upload")
+        .addEventListener("change", function (e) {
+          const reader = new FileReader();
+          reader.onload = function (event) {
+            uploadedImage = new Image();
+            uploadedImage.src = event.target.result;
+          };
+          reader.readAsDataURL(e.target.files[0]);
+        });
 
-function downloadImage(){
-  const canvas=document.getElementById("canvas");
-  const link=document.createElement("a");
-  link.download="versiculo.png";
-  link.href=canvas.toDataURL();
-  link.click();
-}
-</script>
+      function generateImage() {
+        const canvas = document.getElementById("canvas");
+        const ctx = canvas.getContext("2d");
 
-</body>
+        const title = document.getElementById("title").value;
+        const reference = document.getElementById("reference").value;
+        const version = document.getElementById("version").value;
+
+        let verse =
+          bible[reference]?.[version] ||
+          "Digite o versículo acima e selecione a versão…";
+
+        if (uploadedImage) {
+          ctx.drawImage(uploadedImage, 0, 0, 1080, 1080);
+        } else {
+          ctx.fillStyle = "#111827";
+          ctx.fillRect(0, 0, 1080, 1080);
+        }
+
+        ctx.fillStyle = "rgba(0,0,0,0.4)";
+        ctx.fillRect(0, 0, 1080, 1080);
+
+        ctx.fillStyle = "white";
+        ctx.textAlign = "left";
+        ctx.font = "45px Inter";
+        ctx.fillText(title, 100, 140);
+        ctx.font = "60px Inter";
+        wrapText(ctx, verse, 100, 300, 880, 80);
+      }
+
+      function wrapText(ctx, text, x, y, maxWidth, lineHeight) {
+        const words = text.split(" ");
+        let line = "";
+        for (let n = 0; n < words.length; n++) {
+          const testLine = line + words[n] + " ";
+          const metrics = ctx.measureText(testLine);
+          if (metrics.width > maxWidth && n > 0) {
+            ctx.fillText(line, x, y);
+            line = words[n] + " ";
+            y += lineHeight;
+          } else {
+            line = testLine;
+          }
+        }
+        ctx.fillText(line, x, y);
+      }
+
+      function downloadImage() {
+        const canvas = document.getElementById("canvas");
+        const link = document.createElement("a");
+        link.download = "versiculo.png";
+        link.href = canvas.toDataURL();
+        link.click();
+      }
+
+      function scrollToApp() {
+        document.getElementById("appUI").scrollIntoView({ behavior: "smooth" });
+      }
+    </script>
+  </body>
 </html>

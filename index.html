@@ -3,214 +3,199 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>VersoStudio</title>
+<title>VersoStudio Pro</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
 
 <style>
-*{
-  margin:0;
-  padding:0;
-  box-sizing:border-box;
-}
+*{margin:0;padding:0;box-sizing:border-box}
 
 body{
-  font-family:'Inter',sans-serif;
-  background:linear-gradient(135deg,#0f172a,#111827);
-  color:white;
-  min-height:100vh;
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  padding:20px;
+font-family:Inter,sans-serif;
+background:#0f0f1a;
+color:white;
+overflow-x:hidden;
 }
 
-.app{
-  width:100%;
-  max-width:480px;
-  background:rgba(255,255,255,0.05);
-  backdrop-filter:blur(20px);
-  border-radius:28px;
-  padding:25px;
-  box-shadow:0 20px 40px rgba(0,0,0,0.4);
-  animation:fadeUp 0.8s ease;
+.hero{
+height:90vh;
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+text-align:center;
+padding:30px;
+background:radial-gradient(circle at 30% 20%,#6d28d9,#111827 60%);
 }
 
-h1{
-  text-align:center;
-  font-weight:700;
-  margin-bottom:20px;
-  letter-spacing:1px;
+.hero h1{
+font-family:'Playfair Display',serif;
+font-size:42px;
+max-width:600px;
+animation:fadeUp 1s ease;
 }
 
-input, textarea{
-  width:100%;
-  padding:16px;
-  margin-bottom:14px;
-  border:none;
-  border-radius:16px;
-  background:rgba(255,255,255,0.07);
-  color:white;
-  font-size:15px;
-  transition:0.3s;
+.hero p{
+margin-top:20px;
+opacity:0.8;
+animation:fadeUp 1.4s ease;
 }
 
-input:focus, textarea:focus{
-  outline:none;
-  background:rgba(255,255,255,0.12);
-  transform:scale(1.02);
+.section{
+padding:50px 20px;
+display:flex;
+flex-direction:column;
+align-items:center;
 }
 
-.templates{
-  display:flex;
-  gap:10px;
-  margin-bottom:15px;
+.generator{
+background:rgba(255,255,255,0.05);
+backdrop-filter:blur(20px);
+padding:25px;
+border-radius:25px;
+width:100%;
+max-width:480px;
+box-shadow:0 20px 40px rgba(0,0,0,0.4);
+animation:fadeUp 1s ease;
 }
 
-.template{
-  flex:1;
-  height:60px;
-  border-radius:14px;
-  cursor:pointer;
-  transition:0.3s;
+input,select{
+width:100%;
+padding:15px;
+margin-bottom:15px;
+border:none;
+border-radius:15px;
+background:rgba(255,255,255,0.08);
+color:white;
+font-size:14px;
+transition:0.3s;
 }
 
-.template:hover{
-  transform:scale(1.08);
+input:focus{
+background:rgba(255,255,255,0.15);
+transform:scale(1.02);
+outline:none;
 }
 
 button{
-  width:100%;
-  padding:16px;
-  border:none;
-  border-radius:18px;
-  background:white;
-  color:black;
-  font-weight:600;
-  font-size:16px;
-  cursor:pointer;
-  transition:0.3s;
-  margin-top:8px;
+width:100%;
+padding:15px;
+border:none;
+border-radius:15px;
+background:linear-gradient(135deg,#9333ea,#6366f1);
+color:white;
+font-weight:600;
+cursor:pointer;
+transition:0.3s;
 }
 
 button:hover{
-  transform:scale(1.05);
+transform:scale(1.05);
 }
 
 canvas{
-  margin-top:30px;
-  width:100%;
-  max-width:480px;
-  border-radius:25px;
-  animation:fadeUp 0.6s ease;
+margin-top:40px;
+width:100%;
+max-width:480px;
+border-radius:20px;
 }
 
 @keyframes fadeUp{
-  from{opacity:0; transform:translateY(20px);}
-  to{opacity:1; transform:translateY(0);}
+from{opacity:0;transform:translateY(20px)}
+to{opacity:1;transform:translateY(0)}
 }
 </style>
 </head>
 
 <body>
 
-<div class="app">
-<h1>VersoStudio</h1>
+<section class="hero">
+<h1>Transforme Versículos em Arte Digital</h1>
+<p>Digite apenas a referência e gere imagens modernas automaticamente.</p>
+</section>
 
-<input type="text" id="title" placeholder="Título (ex: Versículo do Dia)">
-<textarea id="verse" placeholder="Digite qualquer versículo aqui..."></textarea>
-<input type="text" id="reference" placeholder="Referência (ex: João 3:16)">
+<section class="section">
 
-<div class="templates">
-  <div class="template" style="background:url('https://images.unsplash.com/photo-1506744038136-46273834b3fb') center/cover" onclick="setTemplate(this)"></div>
-  <div class="template" style="background:url('https://images.unsplash.com/photo-1497436072909-60f360e1d4b1') center/cover" onclick="setTemplate(this)"></div>
-  <div class="template" style="background:url('https://images.unsplash.com/photo-1500530855697-b586d89ba3ee') center/cover" onclick="setTemplate(this)"></div>
-</div>
+<div class="generator">
+
+<input type="text" id="reference" placeholder="Digite: João 3:16">
+
+<select id="version">
+<option value="almeida">Almeida</option>
+<option value="kjv">King James</option>
+</select>
 
 <input type="file" id="upload" accept="image/*">
 
-<button onclick="generateImage()">Gerar Imagem</button>
-<button onclick="downloadImage()">Baixar</button>
+<button onclick="buscarVersiculo()">Buscar e Gerar</button>
 
 </div>
 
 <canvas id="canvas" width="1080" height="1080"></canvas>
 
-<script>
-let selectedImage = null;
-let uploadedImage = null;
+</section>
 
-function setTemplate(el){
-  selectedImage = new Image();
-  selectedImage.crossOrigin = "anonymous";
-  selectedImage.src = el.style.backgroundImage.slice(5,-2);
-}
+<script>
+let uploadedImage=null;
 
 document.getElementById("upload").addEventListener("change",function(e){
-  const reader = new FileReader();
-  reader.onload=function(event){
-    uploadedImage = new Image();
-    uploadedImage.src=event.target.result;
-  }
-  reader.readAsDataURL(e.target.files[0]);
+const reader=new FileReader();
+reader.onload=function(event){
+uploadedImage=new Image();
+uploadedImage.src=event.target.result;
+}
+reader.readAsDataURL(e.target.files[0]);
 });
 
-function generateImage(){
-  const canvas=document.getElementById("canvas");
-  const ctx=canvas.getContext("2d");
+async function buscarVersiculo(){
 
-  const title=document.getElementById("title").value;
-  const verse=document.getElementById("verse").value;
-  const reference=document.getElementById("reference").value;
+const ref=document.getElementById("reference").value;
+const version=document.getElementById("version").value;
 
-  if(uploadedImage){
-    ctx.drawImage(uploadedImage,0,0,1080,1080);
-  }else if(selectedImage){
-    ctx.drawImage(selectedImage,0,0,1080,1080);
-  }else{
-    ctx.fillStyle="#111827";
-    ctx.fillRect(0,0,1080,1080);
-  }
+const response=await fetch(`https://bible-api.com/${ref}?translation=${version}`);
+const data=await response.json();
 
-  ctx.fillStyle="rgba(0,0,0,0.45)";
-  ctx.fillRect(0,0,1080,1080);
+gerarImagem(data.text,ref);
+}
 
-  ctx.fillStyle="white";
-  ctx.textAlign="left";
+function gerarImagem(texto,ref){
 
-  ctx.font="50px Inter";
-  ctx.fillText(title,100,150);
+const canvas=document.getElementById("canvas");
+const ctx=canvas.getContext("2d");
 
-  ctx.font="70px Inter";
-  wrapText(ctx,verse,100,350,880,80);
+if(uploadedImage){
+ctx.drawImage(uploadedImage,0,0,1080,1080);
+}else{
+ctx.fillStyle="#111827";
+ctx.fillRect(0,0,1080,1080);
+}
 
-  ctx.font="45px Inter";
-  ctx.fillText(reference,100,980);
+ctx.fillStyle="rgba(0,0,0,0.5)";
+ctx.fillRect(0,0,1080,1080);
+
+ctx.fillStyle="white";
+ctx.font="70px Playfair Display";
+wrapText(ctx,texto,100,300,880,90);
+
+ctx.font="45px Inter";
+ctx.fillText(ref,100,980);
 }
 
 function wrapText(ctx,text,x,y,maxWidth,lineHeight){
-  const words=text.split(" ");
-  let line="";
-  for(let n=0;n<words.length;n++){
-    const testLine=line+words[n]+" ";
-    const metrics=ctx.measureText(testLine);
-    if(metrics.width>maxWidth && n>0){
-      ctx.fillText(line,x,y);
-      line=words[n]+" ";
-      y+=lineHeight;
-    }else{
-      line=testLine;
-    }
-  }
-  ctx.fillText(line,x,y);
+const words=text.split(" ");
+let line="";
+for(let n=0;n<words.length;n++){
+const testLine=line+words[n]+" ";
+const metrics=ctx.measureText(testLine);
+if(metrics.width>maxWidth && n>0){
+ctx.fillText(line,x,y);
+line=words[n]+" ";
+y+=lineHeight;
+}else{
+line=testLine;
 }
-
-function downloadImage(){
-  const canvas=document.getElementById("canvas");
-  const link=document.createElement("a");
-  link.download="versiculo.png";
-  link.href=canvas.toDataURL();
-  link.click();
+}
+ctx.fillText(line,x,y);
 }
 </script>
 

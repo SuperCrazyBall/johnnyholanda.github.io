@@ -279,4 +279,13 @@ area.innerHTML+=`
 </script>
 
 </body>
+
+<script>
+if ("serviceWorker" in navigator) {
+  navigator.serviceWorker.register("service-worker.js");
+}
+</script>
+
+<link rel="manifest" href="manifest.json">
+
 </html>

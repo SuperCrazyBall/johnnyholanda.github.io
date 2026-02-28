@@ -282,11 +282,11 @@ area.innerHTML+=`
 
 </script>
 
-<link rel="manifest" href="manifest.json">
-
 <script>
 if ("serviceWorker" in navigator) {
-  navigator.serviceWorker.register("service-worker.js");
+  window.addEventListener("load", () => {
+    navigator.serviceWorker.register("service-worker.js");
+  });
 }
 </script>
 

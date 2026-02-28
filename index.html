@@ -292,6 +292,21 @@ if ("serviceWorker" in navigator) {
     navigator.serviceWorker.register("service-worker.js");
   });
 }
+
+function baixarImagem() {
+
+  const canvas = document.getElementById("canvas");
+
+  if (!canvas) {
+    alert("Canvas não encontrado.");
+    return;
+  }
+
+  const link = document.createElement("a");
+  link.download = "verso-studio.png";
+  link.href = canvas.toDataURL("image/png");
+  link.click();
+}
 </script>
 
 </body>

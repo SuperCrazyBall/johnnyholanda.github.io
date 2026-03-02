@@ -251,12 +251,17 @@ const data=await response.json();
 gerarImagem(data.text,ref,desc);
 }
 
-function gerarImagem(texto,ref,desc){
+async function gerarImagem(texto,ref,desc){
 
 const loading = document.getElementById("loading");
-  loading.style.display = "block";
 
-  setTimeout(() => {
+  // 1️⃣ ATIVA SPINNER
+  loading.classList.add("active");
+
+  try {
+
+    // 2️⃣ SIMULA PEQUENO TEMPO PARA RENDER
+    await new Promise(resolve => setTimeout(resolve, 300));
 
 const canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d");
@@ -314,11 +319,7 @@ canvas.style.transform = "scale(1)";
 
 },200);
 
-desenharNoCanvas(); // exemplo
-
-    loading.style.display = "none";
-
-  }, 800);
+loading.classList.remove("active");
 }
 
 function wrapText(ctx,text,x,y,maxWidth,lineHeight){

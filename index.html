@@ -147,17 +147,6 @@ to{opacity:1;transform:translateY(0)}
   to { opacity: 1; transform: translateY(0); }
 }
 
-.loading {
-  display: none;
-  text-align: center;
-  margin-top: 20px;
-  animation: fadeIn 0.4s ease;
-}
-
-.loading.active {
-  display: block;
-}
-
 .spinner {
   width: 28px;
   height: 28px;
@@ -215,9 +204,9 @@ Salvar Imagem
 Compartilhar
 </button>
 
-<div id="loading" class="loading">
+<div id="loading" style="display:none; text-align:center; margin-top:20px;">
   <div class="spinner"></div>
-  <p>Gerando seu verso...</p>
+  <p style="font-size:14px; color:#777;">Gerando seu verso...</p>
 </div>
 
 </div>
@@ -264,7 +253,10 @@ gerarImagem(data.text,ref,desc);
 
 function gerarImagem(texto,ref,desc){
 
-document.getElementById("loading").classList.add("active");
+const loading = document.getElementById("loading");
+  loading.style.display = "block";
+
+  setTimeout(() => {
 
 const canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d");
@@ -322,7 +314,11 @@ canvas.style.transform = "scale(1)";
 
 },200);
 
-document.getElementById("loading").classList.remove("active");
+desenharNoCanvas(); // exemplo
+
+    loading.style.display = "none";
+
+  }, 800);
 }
 
 function wrapText(ctx,text,x,y,maxWidth,lineHeight){

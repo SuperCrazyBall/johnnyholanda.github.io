@@ -264,6 +264,8 @@ gerarImagem(data.text,ref,desc);
 
 function gerarImagem(texto,ref,desc){
 
+document.getElementById("loading").classList.add("active");
+
 const canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d");
 
@@ -319,6 +321,8 @@ canvas.style.opacity = "1";
 canvas.style.transform = "scale(1)";
 
 },200);
+
+document.getElementById("loading").classList.remove("active");
 }
 
 function wrapText(ctx,text,x,y,maxWidth,lineHeight){

@@ -147,6 +147,17 @@ to{opacity:1;transform:translateY(0)}
   to { opacity: 1; transform: translateY(0); }
 }
 
+.loading {
+  display: none;
+  text-align: center;
+  margin-top: 20px;
+  animation: fadeIn 0.4s ease;
+}
+
+.loading.active {
+  display: block;
+}
+
 .spinner {
   width: 28px;
   height: 28px;
@@ -196,6 +207,11 @@ to{opacity:1;transform:translateY(0)}
 
 <button onclick="buscarVersiculo()">Gerar Imagem</button>
 
+<div id="loading" class="loading">
+  <div class="spinner"></div>
+  <p>Gerando seu verso...</p>
+</div>
+
 <button onclick="baixarImagem()">
 Salvar Imagem
 </button>
@@ -203,11 +219,6 @@ Salvar Imagem
 <button onclick="compartilharImagem()">
 Compartilhar
 </button>
-
-<div id="loading" style="display:none; text-align:center; margin-top:20px;">
-  <div class="spinner"></div>
-  <p style="font-size:14px; color:#777;">Gerando seu verso...</p>
-</div>
 
 </div>
 
@@ -251,12 +262,9 @@ const data=await response.json();
 gerarImagem(data.text,ref,desc);
 }
 
-async function gerarImagem(texto,ref,desc){
+function gerarImagem(texto,ref,desc){
 
-const loading = document.getElementById("loading");
-  loading.classList.add("active");
-
-  try {
+document.getElementById("loading").classList.add("active");
 
 const canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d");
@@ -314,7 +322,7 @@ canvas.style.transform = "scale(1)";
 
 },200);
 
-loading.classList.remove("active");
+document.getElementById("loading").classList.remove("active");
 }
 
 function wrapText(ctx,text,x,y,maxWidth,lineHeight){

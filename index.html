@@ -311,6 +311,41 @@ function baixarImagem() {
   link.href = canvas.toDataURL("image/png");
   link.click();
 }
+
+async function compartilharImagem() {
+
+  const canvas = document.getElementById("canvas");
+
+  if (!canvas) {
+    alert("Canvas não encontrado.");
+    return;
+  }
+
+  canvas.toBlob(async (blob) => {
+
+    const file = new File([blob], "verso-studio.png", {
+      type: "image/png"
+    });
+
+    if (navigator.canShare && navigator.canShare({ files: [file] })) {
+
+      try {
+        await navigator.share({
+          files: [file],
+          title: "Verso Studio",
+          text: "Olha esse versículo que criei no Verso Studio 🧡"
+        });
+
+      } catch (error) {
+        console.log("Erro ao compartilhar:", error);
+      }
+
+    } else {
+      alert("Seu dispositivo não suporta compartilhamento direto.");
+    }
+
+  }, "image/png");
+}
 </script>
 
 </body>

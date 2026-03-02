@@ -251,16 +251,14 @@ const data=await response.json();
 gerarImagem(data.text,ref,desc);
 }
 
-function gerarImagem(texto,ref,desc){
+async function gerarImagem(texto,ref,desc){
 
 const loading = document.getElementById("loading");
 
-  // 1️⃣ ATIVA SPINNER
   loading.classList.add("active");
 
   try {
 
-    // 2️⃣ SIMULA PEQUENO TEMPO PARA RENDER
     await new Promise(resolve => setTimeout(resolve, 300));
 
 const canvas = document.getElementById("canvas");

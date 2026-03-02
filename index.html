@@ -254,12 +254,9 @@ gerarImagem(data.text,ref,desc);
 async function gerarImagem(texto,ref,desc){
 
 const loading = document.getElementById("loading");
-
   loading.classList.add("active");
 
   try {
-
-    await new Promise(resolve => setTimeout(resolve, 300));
 
 const canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d");

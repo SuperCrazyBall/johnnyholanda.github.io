@@ -272,7 +272,16 @@ gerarImagem(data.text,ref,desc);
 
 function gerarImagem(texto,ref,desc){
 
-document.getElementById("loading").classList.add("active");
+const loading = document.getElementById("loading");
+
+  if (!loading) {
+    alert("Elemento loading não encontrado");
+    return;
+  }
+
+  loading.style.display = "block";
+
+  setTimeout(() => {
 
 const canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d");
@@ -330,7 +339,9 @@ canvas.style.transform = "scale(1)";
 
 },200);
 
-document.getElementById("loading").classList.remove("active");
+loading.style.display = "none";
+
+  }, 1500);
 }
 
 function wrapText(ctx,text,x,y,maxWidth,lineHeight){

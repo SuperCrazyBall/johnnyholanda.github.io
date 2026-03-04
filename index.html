@@ -283,7 +283,6 @@ function carregarVersiculoDoDia() {
   const indice = numeroDoDia % versiculosDoDia.length;
 
   const versiculoEscolhido = versiculosDoDia[indice];
-
   document.getElementById("referencia").value = versiculoEscolhido.referencia;
 
   gerarImagemComTexto(
@@ -439,6 +438,12 @@ if ("serviceWorker" in navigator) {
   window.addEventListener("load", () => {
 
 carregarVersiculoDoDia();
+
+  setTimeout(() => {
+    document.getElementById("splash").classList.add("hidden");
+  }, 1800);
+
+});
     navigator.serviceWorker.register("service-worker.js");
   });
 }

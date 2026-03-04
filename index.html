@@ -290,18 +290,34 @@ const versiculosDoDia = [
 
 function versiculoAutomatico() {
 
-  const hoje = new Date();
+  const versiculos = [
+    {
+      texto: "O Senhor é o meu pastor; nada me faltará.",
+      referencia: "Salmos 23:1"
+    },
+    {
+      texto: "Tudo posso naquele que me fortalece.",
+      referencia: "Filipenses 4:13"
+    },
+    {
+      texto: "Porque sou eu que conheço os planos que tenho para vocês.",
+      referencia: "Jeremias 29:11"
+    },
+    {
+      texto: "Entrega o teu caminho ao Senhor; confia nele.",
+      referencia: "Salmos 37:5"
+    }
+  ];
 
-  const numero = hoje.getFullYear() + hoje.getMonth() + hoje.getDate();
+  const hoje = new Date().getDate();
+  const indice = hoje % versiculos.length;
 
-  const indice = numero % versiculosDoDia.length;
+  const escolhido = versiculos[indice];
 
-  const dados = versiculosDoDia[indice].split("|");
+  if (typeof desenharNoCanvas === "function") {
+    desenharNoCanvas(escolhido.texto, escolhido.referencia);
+  }
 
-  const referencia = dados[0];
-  const texto = dados[1];
-
-  desenharNoCanvas(texto, referencia);
 }
 
 function desenharNoCanvas(texto, referencia) {
@@ -595,6 +611,11 @@ window.addEventListener("load", () => {
   setTimeout(() => {
     document.getElementById("splash").classList.add("hidden");
   }, 1800);
+
+  // chama o versículo depois de meio segundo
+  setTimeout(() => {
+    versiculoAutomatico();
+  }, 500);
 
 });
 </script>

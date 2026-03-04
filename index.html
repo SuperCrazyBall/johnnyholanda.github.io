@@ -327,9 +327,23 @@ ctx.fillRect(0, 0, canvas.width, canvas.height);
   const boxY = centerY - boxHeight / 2;
 
   ctx.fillStyle = "rgba(0, 0, 0, 0.55)";
-  ctx.beginPath();
-  ctx.roundRect(boxX, boxY, boxWidth, boxHeight, 25);
-  ctx.fill();
+ctx.beginPath();
+
+ctx.moveTo(boxX + 25, boxY);
+ctx.lineTo(boxX + boxWidth - 25, boxY);
+ctx.quadraticCurveTo(boxX + boxWidth, boxY, boxX + boxWidth, boxY + 25);
+
+ctx.lineTo(boxX + boxWidth, boxY + boxHeight - 25);
+ctx.quadraticCurveTo(boxX + boxWidth, boxY + boxHeight, boxX + boxWidth - 25, boxY + boxHeight);
+
+ctx.lineTo(boxX + 25, boxY + boxHeight);
+ctx.quadraticCurveTo(boxX, boxY + boxHeight, boxX, boxY + boxHeight - 25);
+
+ctx.lineTo(boxX, boxY + 25);
+ctx.quadraticCurveTo(boxX, boxY, boxX + 25, boxY);
+
+ctx.closePath();
+ctx.fill();
 
   // ===== TEXTO PRINCIPAL =====
   ctx.fillStyle = "white";

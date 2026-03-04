@@ -306,6 +306,12 @@ function versiculoAutomatico() {
 
 function desenharNoCanvas(texto, referencia) {
 
+const gradient = ctx.createLinearGradient(0, 0, 0, canvas.height);
+gradient.addColorStop(0, "rgba(0,0,0,0.2)");
+gradient.addColorStop(1, "rgba(0,0,0,0.7)");
+ctx.fillStyle = gradient;
+ctx.fillRect(0, 0, canvas.width, canvas.height);
+
   const canvas = document.getElementById("canvas");
   const ctx = canvas.getContext("2d");
 
@@ -368,12 +374,6 @@ function desenharNoCanvas(texto, referencia) {
   ctx.shadowBlur = 6;
 
   ctx.fillText(referencia, centerX, boxY + boxHeight - 30);
-
-const gradient = ctx.createLinearGradient(0, 0, 0, canvas.height);
-gradient.addColorStop(0, "rgba(0,0,0,0.2)");
-gradient.addColorStop(1, "rgba(0,0,0,0.7)");
-ctx.fillStyle = gradient;
-ctx.fillRect(0, 0, canvas.width, canvas.height);
 }
 
 let selectedImage=null;

@@ -252,43 +252,44 @@ Compartilhar
 <script>
 
 const versiculosDoDia = [
-  {
-    referencia: "Salmos 23:1",
-    texto: "O Senhor é o meu pastor; nada me faltará."
-  },
-  {
-    referencia: "Filipenses 4:13",
-    texto: "Posso todas as coisas naquele que me fortalece."
-  },
-  {
-    referencia: "Jeremias 29:11",
-    texto: "Porque eu bem sei os pensamentos que tenho a vosso respeito, diz o Senhor."
-  },
-  {
-    referencia: "Provérbios 3:5",
-    texto: "Confia no Senhor de todo o teu coração."
-  },
-  {
-    referencia: "Isaías 41:10",
-    texto: "Não temas, porque eu sou contigo."
-  }
+  "Salmos 23:1|O Senhor é o meu pastor; nada me faltará.",
+  "Filipenses 4:13|Posso todas as coisas naquele que me fortalece.",
+  "Jeremias 29:11|Porque eu bem sei os pensamentos que tenho a vosso respeito.",
+  "Provérbios 3:5|Confia no Senhor de todo o teu coração.",
+  "Isaías 41:10|Não temas, porque eu sou contigo."
 ];
 
-function carregarVersiculoDoDia() {
+function versiculoAutomatico() {
 
   const hoje = new Date();
 
-  const numeroDoDia = hoje.getFullYear() + hoje.getMonth() + hoje.getDate();
+  const numero = hoje.getFullYear() + hoje.getMonth() + hoje.getDate();
 
-  const indice = numeroDoDia % versiculosDoDia.length;
+  const indice = numero % versiculosDoDia.length;
 
-  const versiculoEscolhido = versiculosDoDia[indice];
-  document.getElementById("referencia").value = versiculoEscolhido.referencia;
+  const dados = versiculosDoDia[indice].split("|");
 
-  gerarImagemComTexto(
-    versiculoEscolhido.texto,
-    versiculoEscolhido.referencia
-  );
+  const referencia = dados[0];
+  const texto = dados[1];
+
+  desenharNoCanvas(texto, referencia);
+}
+
+function desenharNoCanvas(texto, referencia) {
+
+  const canvas = document.getElementById("canvas");
+  const ctx = canvas.getContext("2d");
+
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+  ctx.fillStyle = "white";
+  ctx.textAlign = "center";
+
+  ctx.font = "22px Arial";
+  ctx.fillText(texto, canvas.width / 2, canvas.height / 2);
+
+  ctx.font = "18px Arial";
+  ctx.fillText(referencia, canvas.width / 2, canvas.height / 2 + 40);
 }
 
 let selectedImage=null;
@@ -436,14 +437,6 @@ area.innerHTML+=`
 <script>
 if ("serviceWorker" in navigator) {
   window.addEventListener("load", () => {
-
-carregarVersiculoDoDia();
-
-  setTimeout(() => {
-    document.getElementById("splash").classList.add("hidden");
-  }, 1800);
-
-});
     navigator.serviceWorker.register("service-worker.js");
   });
 }
@@ -499,6 +492,9 @@ async function compartilharImagem() {
 }
 
 window.addEventListener("load", () => {
+
+versiculoAutomatico();
+
   setTimeout(() => {
     document.getElementById("splash").classList.add("hidden");
   }, 1800);

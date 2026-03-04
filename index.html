@@ -280,48 +280,6 @@ Compartilhar
 
 <script>
 
-const versiculosDoDia = [
-  "Salmos 23:1|O Senhor é o meu pastor; nada me faltará.",
-  "Filipenses 4:13|Posso todas as coisas naquele que me fortalece.",
-  "Jeremias 29:11|Porque eu bem sei os pensamentos que tenho a vosso respeito.",
-  "Provérbios 3:5|Confia no Senhor de todo o teu coração.",
-  "Isaías 41:10|Não temas, porque eu sou contigo."
-];
-
-function versiculoAutomatico() {
-
-console.log("Versículo automático rodou!");
-
-  const versiculos = [
-    {
-      texto: "O Senhor é o meu pastor; nada me faltará.",
-      referencia: "Salmos 23:1"
-    },
-    {
-      texto: "Tudo posso naquele que me fortalece.",
-      referencia: "Filipenses 4:13"
-    },
-    {
-      texto: "Porque sou eu que conheço os planos que tenho para vocês.",
-      referencia: "Jeremias 29:11"
-    },
-    {
-      texto: "Entrega o teu caminho ao Senhor; confia nele.",
-      referencia: "Salmos 37:5"
-    }
-  ];
-
-  const hoje = new Date().getDate();
-  const indice = hoje % versiculos.length;
-
-  const escolhido = versiculos[indice];
-
-  if (typeof desenharNoCanvas === "function") {
-    desenharNoCanvas(escolhido.texto, escolhido.referencia);
-  }
-
-}
-
 function desenharNoCanvas(texto, referencia) {
 
 const gradient = ctx.createLinearGradient(0, 0, 0, canvas.height);
@@ -613,15 +571,7 @@ window.addEventListener("load", () => {
   setTimeout(() => {
     document.getElementById("splash").classList.add("hidden");
   }, 1800);
-
-  // chama o versículo depois de meio segundo
-  setTimeout(() => {
-    versiculoAutomatico();
-  }, 500);
-
 });
-
-desenharNoCanvas("TESTE VISUAL", "Referência 1:1");
 
 </script>
 </body>

@@ -311,20 +311,33 @@ function desenharNoCanvas(texto, referencia) {
 
   ctx.clearRect(0, 0, canvas.width, canvas.height);
 
+  const centerX = canvas.width / 2;
+  const centerY = canvas.height / 2;
+
+  // ===== CAIXA DE FUNDO (GLASS EFFECT) =====
+  const boxWidth = canvas.width * 0.85;
+  const boxHeight = canvas.height * 0.28;
+  const boxX = centerX - boxWidth / 2;
+  const boxY = centerY - boxHeight / 2;
+
+  ctx.fillStyle = "rgba(0, 0, 0, 0.55)";
+  ctx.beginPath();
+  ctx.roundRect(boxX, boxY, boxWidth, boxHeight, 25);
+  ctx.fill();
+
+  // ===== TEXTO PRINCIPAL =====
   ctx.fillStyle = "white";
   ctx.textAlign = "center";
+  ctx.shadowColor = "rgba(0,0,0,0.8)";
+  ctx.shadowBlur = 10;
 
-  // ===== CONFIGURAÇÃO DO TEXTO PRINCIPAL =====
-  ctx.font = "bold 28px Arial";
-  ctx.shadowColor = "rgba(0,0,0,0.6)";
-  ctx.shadowBlur = 8;
+  ctx.font = "bold 34px Arial";
 
-  const maxWidth = canvas.width * 0.8;
-  const lineHeight = 36;
-  const x = canvas.width / 2;
-  let y = canvas.height * 0.55;
+  const maxWidth = boxWidth * 0.85;
+  const lineHeight = 42;
 
-  // ===== FUNÇÃO DE QUEBRA AUTOMÁTICA =====
+  let y = boxY + 60;
+
   function wrapText(context, text, x, y, maxWidth, lineHeight) {
     const words = text.split(" ");
     let line = "";
@@ -347,15 +360,20 @@ function desenharNoCanvas(texto, referencia) {
     return y;
   }
 
-  // ===== DESENHAR TEXTO =====
-  y = wrapText(ctx, texto, x, y, maxWidth, lineHeight);
+  y = wrapText(ctx, texto, centerX, y, maxWidth, lineHeight);
 
   // ===== REFERÊNCIA =====
-  ctx.font = "18px Arial";
-  ctx.shadowBlur = 4;
+  ctx.font = "20px Arial";
   ctx.fillStyle = "#ff7a00";
+  ctx.shadowBlur = 6;
 
-  ctx.fillText(referencia, x, y + 40);
+  ctx.fillText(referencia, centerX, boxY + boxHeight - 30);
+
+const gradient = ctx.createLinearGradient(0, 0, 0, canvas.height);
+gradient.addColorStop(0, "rgba(0,0,0,0.2)");
+gradient.addColorStop(1, "rgba(0,0,0,0.7)");
+ctx.fillStyle = gradient;
+ctx.fillRect(0, 0, canvas.width, canvas.height);
 }
 
 let selectedImage=null;

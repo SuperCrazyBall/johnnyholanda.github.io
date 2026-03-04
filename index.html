@@ -314,11 +314,48 @@ function desenharNoCanvas(texto, referencia) {
   ctx.fillStyle = "white";
   ctx.textAlign = "center";
 
-  ctx.font = "22px Arial";
-  ctx.fillText(texto, canvas.width / 2, canvas.height / 2);
+  // ===== CONFIGURAÇÃO DO TEXTO PRINCIPAL =====
+  ctx.font = "bold 28px Arial";
+  ctx.shadowColor = "rgba(0,0,0,0.6)";
+  ctx.shadowBlur = 8;
 
+  const maxWidth = canvas.width * 0.8;
+  const lineHeight = 36;
+  const x = canvas.width / 2;
+  let y = canvas.height * 0.55;
+
+  // ===== FUNÇÃO DE QUEBRA AUTOMÁTICA =====
+  function wrapText(context, text, x, y, maxWidth, lineHeight) {
+    const words = text.split(" ");
+    let line = "";
+
+    for (let n = 0; n < words.length; n++) {
+      const testLine = line + words[n] + " ";
+      const metrics = context.measureText(testLine);
+      const testWidth = metrics.width;
+
+      if (testWidth > maxWidth && n > 0) {
+        context.fillText(line, x, y);
+        line = words[n] + " ";
+        y += lineHeight;
+      } else {
+        line = testLine;
+      }
+    }
+
+    context.fillText(line, x, y);
+    return y;
+  }
+
+  // ===== DESENHAR TEXTO =====
+  y = wrapText(ctx, texto, x, y, maxWidth, lineHeight);
+
+  // ===== REFERÊNCIA =====
   ctx.font = "18px Arial";
-  ctx.fillText(referencia, canvas.width / 2, canvas.height / 2 + 40);
+  ctx.shadowBlur = 4;
+  ctx.fillStyle = "#ff7a00";
+
+  ctx.fillText(referencia, x, y + 40);
 }
 
 let selectedImage=null;

@@ -250,6 +250,48 @@ Compartilhar
 </div>
 
 <script>
+
+const versiculosDoDia = [
+  {
+    referencia: "Salmos 23:1",
+    texto: "O Senhor é o meu pastor; nada me faltará."
+  },
+  {
+    referencia: "Filipenses 4:13",
+    texto: "Posso todas as coisas naquele que me fortalece."
+  },
+  {
+    referencia: "Jeremias 29:11",
+    texto: "Porque eu bem sei os pensamentos que tenho a vosso respeito, diz o Senhor."
+  },
+  {
+    referencia: "Provérbios 3:5",
+    texto: "Confia no Senhor de todo o teu coração."
+  },
+  {
+    referencia: "Isaías 41:10",
+    texto: "Não temas, porque eu sou contigo."
+  }
+];
+
+function carregarVersiculoDoDia() {
+
+  const hoje = new Date();
+
+  const numeroDoDia = hoje.getFullYear() + hoje.getMonth() + hoje.getDate();
+
+  const indice = numeroDoDia % versiculosDoDia.length;
+
+  const versiculoEscolhido = versiculosDoDia[indice];
+
+  document.getElementById("referencia").value = versiculoEscolhido.referencia;
+
+  gerarImagemComTexto(
+    versiculoEscolhido.texto,
+    versiculoEscolhido.referencia
+  );
+}
+
 let selectedImage=null;
 let uploadedImage=null;
 
@@ -395,6 +437,8 @@ area.innerHTML+=`
 <script>
 if ("serviceWorker" in navigator) {
   window.addEventListener("load", () => {
+
+carregarVersiculoDoDia();
     navigator.serviceWorker.register("service-worker.js");
   });
 }

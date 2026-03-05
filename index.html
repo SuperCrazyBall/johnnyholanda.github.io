@@ -17,50 +17,56 @@
 
 .versiculo-card {
   width: 90%;
-  max-width: 600px;
-  margin: 40px auto;
-  padding: 30px;
+  max-width: 700px;
+  margin: 60px auto;
 
-  border-radius: 20px;
+  padding: 50px 35px;
 
-  background: rgba(255,255,255,0.05);
-  backdrop-filter: blur(12px);
+  border-radius: 25px;
 
-  border: 1px solid rgba(255,255,255,0.1);
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(10px);
+
+  border: 1px solid rgba(255,255,255,0.08);
 
   text-align: center;
 
-  box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+  box-shadow: 0 20px 60px rgba(0,0,0,0.7);
 
-  animation: aparecer 1s ease;
+  position: relative;
 }
 
 .versiculo-texto {
-  font-size: 28px;
+  font-size: 32px;
   font-weight: 600;
-  line-height: 1.5;
+  line-height: 1.6;
   color: white;
 }
 
 .versiculo-ref {
-  margin-top: 15px;
-  font-size: 16px;
-  color: #ff7a00;
+  display: block;
+  margin-top: 20px;
+
+  font-size: 18px;
   font-weight: bold;
+
+  color: #ff7a00;
 }
 
-@keyframes aparecer {
+.versiculo-card {
+  animation: subir 0.8s ease;
+}
+
+@keyframes subir {
   from {
     opacity: 0;
-    transform: translateY(20px);
+    transform: translateY(25px);
   }
 
   to {
     opacity: 1;
     transform: translateY(0);
   }
-}
-
 }
 
 *{margin:0;padding:0;box-sizing:border-box}

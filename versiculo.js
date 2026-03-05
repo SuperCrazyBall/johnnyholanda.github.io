@@ -28,4 +28,7 @@ function versiculoDoDia() {
     desenharNoCanvas(escolhido.texto, escolhido.referencia);
   }
 
+document.getElementById("versiculo").innerText = texto
+document.getElementById("referencia").innerText = referencia
+
 }

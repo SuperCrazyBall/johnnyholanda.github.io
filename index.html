@@ -15,22 +15,50 @@
 
 <style>
 
-.versiculoCard{
-opacity:0;
-transform:translateY(40px);
-animation:aparecerVersiculo 1s ease forwards;
+.versiculo-card {
+  width: 90%;
+  max-width: 600px;
+  margin: 40px auto;
+  padding: 30px;
+
+  border-radius: 20px;
+
+  background: rgba(255,255,255,0.05);
+  backdrop-filter: blur(12px);
+
+  border: 1px solid rgba(255,255,255,0.1);
+
+  text-align: center;
+
+  box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+
+  animation: aparecer 1s ease;
 }
 
-@keyframes aparecerVersiculo{
-
-from{
-opacity:0;
-transform:translateY(40px);
+.versiculo-texto {
+  font-size: 28px;
+  font-weight: 600;
+  line-height: 1.5;
+  color: white;
 }
 
-to{
-opacity:1;
-transform:translateY(0);
+.versiculo-ref {
+  margin-top: 15px;
+  font-size: 16px;
+  color: #ff7a00;
+  font-weight: bold;
+}
+
+@keyframes aparecer {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 }

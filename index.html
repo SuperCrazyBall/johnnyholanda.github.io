@@ -4,6 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+
 <link rel="manifest" href="manifest.json">
 <meta name="theme-color" content="#ff7a00">
 
@@ -12,6 +14,27 @@
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
 
 <style>
+
+.versiculoCard{
+opacity:0;
+transform:translateY(40px);
+animation:aparecerVersiculo 1s ease forwards;
+}
+
+@keyframes aparecerVersiculo{
+
+from{
+opacity:0;
+transform:translateY(40px);
+}
+
+to{
+opacity:1;
+transform:translateY(0);
+}
+
+}
+
 *{margin:0;padding:0;box-sizing:border-box}
 
 body{
@@ -227,6 +250,8 @@ body {
 
 <div class="generator">
 
+<div id="versiculoDia" class="versiculoCard">
+
 <input type="text" id="description" placeholder="Descrição (ex: Versículo do Dia)">
 <input type="text" id="reference" placeholder="Digite a referência (ex: João 3:16)">
 <select id="version">
@@ -287,11 +312,13 @@ function desenharNoCanvas(texto, referencia) {
 
   ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-const gradient = ctx.createLinearGradient(0, 0, 0, canvas.height);
+const gradient = ctx.createLinearGradient(0,0,canvas.width,canvas.height);
 
-gradient.addColorStop(0, "rgba(0,0,0,0)");
-gradient.addColorStop(0.6, "rgba(0,0,0,0.35)");
-gradient.addColorStop(1, "rgba(0,0,0,0.85)");
+gradient.addColorStop(0,"#ff7a00");
+gradient.addColorStop(1,"#ff3d00");
+
+ctx.fillStyle = gradient;
+ctx.fillRect(0,0,canvas.width,canvas.height);
 
 ctx.fillStyle = gradient;
 ctx.fillRect(0, 0, canvas.width, canvas.height);
@@ -305,7 +332,10 @@ ctx.fillRect(0, 0, canvas.width, canvas.height);
   const boxX = centerX - boxWidth / 2;
   const boxY = centerY - boxHeight / 2;
 
-  ctx.fillStyle = "rgba(0, 0, 0, 0.55)";
+  ctx.fillStyle = "rgba(20,20,20,0.75)";
+ctx.shadowColor = "rgba(0,0,0,0.4)";
+ctx.shadowBlur = 40;
+ctx.shadowOffsetY = 10;
 ctx.beginPath();
 
 ctx.moveTo(boxX + 25, boxY);
@@ -330,10 +360,9 @@ ctx.fill();
   ctx.shadowColor = "rgba(0,0,0,0.8)";
   ctx.shadowBlur = 10;
 
-  ctx.font = "bold 36px 'Poppins', sans-serif";
-
+  ctx.font = "600 52px Playfair Display";
   const maxWidth = boxWidth * 0.85;
-  const lineHeight = 42;
+  const lineHeight = 60;
 
   let y = boxY + 60;
 
@@ -362,7 +391,7 @@ ctx.fill();
   y = wrapText(ctx, texto, centerX, y, maxWidth, lineHeight);
 
   // ===== REFERÊNCIA =====
-  ctx.font = "20px Arial";
+  ctx.font = "600 28px Poppins";
   ctx.fillStyle = "#ff7a00";
   ctx.shadowBlur = 6;
 

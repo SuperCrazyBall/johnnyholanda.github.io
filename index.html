@@ -312,21 +312,6 @@ function desenharNoCanvas(texto, referencia) {
 
   ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-ctx.filter = "blur(8px)";
-ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-ctx.filter = "none";
-
-const gradient = ctx.createLinearGradient(0,0,canvas.width,canvas.height);
-
-gradient.addColorStop(0,"#ff7a00");
-gradient.addColorStop(1,"#ff3d00");
-
-ctx.fillStyle = gradient;
-ctx.fillRect(0,0,canvas.width,canvas.height);
-
-ctx.fillStyle = gradient;
-ctx.fillRect(0, 0, canvas.width, canvas.height);
-
   const centerX = canvas.width / 2;
   const centerY = canvas.height / 2;
 
